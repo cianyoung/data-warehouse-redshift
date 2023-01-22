@@ -20,6 +20,7 @@ time_table_drop = "DROP TABLE IF EXISTS time;"
 
 # CREATE TABLES
 
+# Two staging tables which copy the JSON file inside the S3 buckets.
 staging_events_table_create= ("""
 
 """)
