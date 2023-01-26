@@ -1,26 +1,22 @@
 """ Copious commentary to build that habit"""
 import logging
-logging.basicConfig(level=logging.INFO,
-                    format='%(asctime)s %(levelname)s:%(message)s',
-                    datefmt='%Y-%m-%d %H:%M:%S')
-
 import argparse
 import configparser
 import json
-
-
 import shlex
 import subprocess
 import time
 import boto3
 from botocore.exceptions import ClientError
+import os
+
 
 # CONFIG
 config = configparser.ConfigParser()
 config.read('dwh.cfg')
 
-KEY = ""
-SECRET = ""
+KEY = os.environ['AWS_ACCESS_KEY_ID']
+SECRET = os.environ['AWS_SECRET_ACCESS_KEY']
 DWH_IAM_ROLE_NAME = config['CLUSTER']['DWH_IAM_ROLE_NAME']
 DWH_CLUSTER_ID = config['CLUSTER']['DWH_CLUSTER_IDENTIFIER']
 REGION = config['CLUSTER']['REGION']
@@ -28,10 +24,11 @@ DB_PORT = config['DB']['DB_PORT']
 S3_READ_ARN = "arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess"
 
 
-def create_resource():
+def create_resources():
     """ Create required AWS resources """
+    options = dict(region_name=REGION, aws_access_key_id=KEY, aws_secret_access_key=SECRET)
     ec2 = boto3.resource('ec2', **options)
-    s3 = boto3.resource('s3', *options)
+    s3 = boto3.resource('s3', **options)
     iam = boto3.client('iam', **options)
     redshift = boto3.client('redshift', **options)
     return ec2, s3, iam, redshift
@@ -126,7 +123,7 @@ def open_tcp(ec2, vpc_id):
 
 def main(args):
     """ Main function"""
-
+    logging.info("Entering main function...")
     ec2, s3, iam, redshift = create_resources()
     if args.delete:
         delete_redshift_cluster(redshift)
@@ -151,7 +148,11 @@ def main(args):
         else:
             logging.error('Could not connect to cluster')
 
-if __name__ == '__main':
+if __name__ == '__main__':
+    logging.basicConfig(level=logging.INFO,
+                        format='%(asctime)s %(levelname)s:%(message)s',
+                        datefmt='%Y-%m-%d %H:%M:%S')
+    logging.info("Starting...")
     """ Set logging and CLI arguments """
     # Create an instance of the parser class and store in parser variable
     parser = argparse.ArgumentParser()
