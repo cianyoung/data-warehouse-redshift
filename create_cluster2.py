@@ -10,7 +10,6 @@ import boto3
 from botocore.exceptions import ClientError
 import os
 
-
 # CONFIG
 config = configparser.ConfigParser()
 config.read('dwh.cfg')
