@@ -92,7 +92,7 @@ song_table_create = ("""
         artist_id       TEXT DISTKEY,
         year            SMALLINT,
         duration        FLOAT4
-    ); diststyle key,
+    ); diststyle key;
 """)
 
 artist_table_create = ("""
