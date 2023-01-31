@@ -46,15 +46,16 @@ staging_events_table_create= ("""
 staging_songs_table_create = ("""
     CREATE TABLE IF NOT EXISTS stage_song
     (
-        num_songs           INTEGER,
+        song_id             TEXT,
+        title               TEXT,
+        duration            FLOAT4,
+        year                SMALLINT,
         artist_id           TEXT,
         artist_name         TEXT,
         artist_latitude     REAL,
         artist_longitude    REAL,
-        song_id             TEXT,
-        title               TEXT,
-        duration            FLOAT4,
-        year                SMALLINT
+        artist_location     TEXT,
+        num_songs           INTEGER
     );
 """)
 

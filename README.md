@@ -8,5 +8,26 @@ You are tasked with building an ETL pipeline that extracts their data from S3, s
 
 ## Project Description
 
-* Build an ETL pipeline for a database hosted on RedShuft
+* Build an ETL pipeline for a database hosted on RedShift
 * Load data from S3 to staging tables on Redshift and execute SQL statements that create the analytics tables from these staging tables 
+
+## Files
+
+`create_cluster2.py`
+* Create IAM role, Redshift cluster, and provision connectivity from outside VPC
+* Pass `--delete` flag to delete resources
+
+`create_tables.py`
+* Drop and recreate tables
+
+`dwh.cfg` 
+* Configure Redshift cluster and data import
+
+`etl.py`
+* Copy data to staging tables and insert into star schema fact and dimension tables
+
+`sql_queries.py`
+
+* Creating and dropping staging and star schema tables
+* Copy JSON data from S3 to Redshift staging tables
+* Insert data from staging tables to star schema fact and dimension tables 
