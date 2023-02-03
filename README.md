@@ -26,8 +26,24 @@ You are tasked with building an ETL pipeline that extracts their data from S3, s
 `etl.py`
 * Copy data to staging tables and insert into star schema fact and dimension tables
 
-`sql_queries.py`
+`sql_queries2.py`
 
 * Creating and dropping staging and star schema tables
 * Copy JSON data from S3 to Redshift staging tables
 * Insert data from staging tables to star schema fact and dimension tables 
+
+## Run Scripts
+
+* Set environment variables `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`
+* Set `DB` and `DB_PASSWORD` in config file, `dhw.cgh`
+* Create Redshift cluster, IAM role, and configure network connectivity
+``` $ python create_cluster.py ```
+* Complete `dwh.cfg` with outputs from `create_cluster2.py`
+** `CLUSTER / HOST`
+** `IAM_ROLE / ARN`
+* Drop and recreate tables
+``` $ python create_tables.py ```
+* Run ETL Pipeline
+``` $ python etl.py ```
+* Delete IAM role and Redshift cluster
+``` $ python create_cluster2.py --delete ```
