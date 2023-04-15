@@ -1,3 +1,5 @@
 __pycache__
 workspace_archive.tar
 downloadWorkspace.ipynb
+.DS_Store
+dwh.cfg
